@@ -27,5 +27,5 @@ func isPrime(n int) (bool, string) {
 			return false, fmt.Sprintf("%d is not a prime number because it is divisible by %d", n, i)
 		}
 	}
-	return true, fmt.Sprintf("%d is a prime number", n)
+	return true, fmt.Sprintf("%d is a prime number!", n)
 }
