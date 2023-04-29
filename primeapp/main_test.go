@@ -3,6 +3,7 @@ package main
 import (
 	"io"
 	"os"
+	"strings"
 	"testing"
 )
 
@@ -55,5 +56,30 @@ func Test_prompt(t *testing.T) {
 	// perform our test
 	if string(out) != "> " {
 		t.Errorf("expected > but got %s", string(out))
+	}
+}
+
+func Test_intro(t *testing.T) {
+	// save a copy of os.Stdout
+	oldOut := os.Stdout
+
+	// create a read and write pipe
+	r, w, _ := os.Pipe()
+	os.Stdout = w
+
+	intro()
+
+	// close our writer
+	_ = w.Close()
+
+	// read os.Stdout to what it was before
+	os.Stdout = oldOut
+
+	// read the output of our prompt() func from out read pipe
+	out, _ := io.ReadAll(r)
+
+	// perform our test
+	if !strings.Contains(string(out), "Enter a number to see if it is prime, or 'q' to quit.") {
+		t.Errorf("intro text not correct; got %s", string(out))
 	}
 }
