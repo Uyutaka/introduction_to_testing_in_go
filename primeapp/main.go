@@ -3,19 +3,20 @@ package main
 import (
 	"bufio"
 	"fmt"
+	"io"
 	"os"
 	"strconv"
 	"strings"
 )
 
-func main() {	
+func main() {
 	// print a welcome message
 	intro()
 	// create a channel to indicate when the user wants to quit
 	doneChan := make(chan bool)
 
 	// start a goroutine to read user input and run program
-	go readUserInput(doneChan)
+	go readUserInput(os.Stdin, doneChan)
 
 	// block until the doneChan gets a value
 	<-doneChan
@@ -27,8 +28,8 @@ func main() {
 	fmt.Println("Goodbye!")
 }
 
-func readUserInput(doneChan chan bool) {
-	scanner := bufio.NewScanner(os.Stdin)
+func readUserInput(in io.Reader, doneChan chan bool) {
+	scanner := bufio.NewScanner(in)
 	for {
 		res, done := checkNumbers(scanner)
 		if done {
@@ -66,9 +67,11 @@ func intro() {
 	fmt.Println("Enter a number to see if it is prime, or 'q' to quit.")
 	prompt()
 }
+
 func prompt() {
 	fmt.Print("> ")
 }
+
 func isPrime(n int) (bool, string) {
 	// 0 and 1 are not prime by definition
 	if n == 0 || n == 1 {
