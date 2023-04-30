@@ -19,4 +19,9 @@ go test -coverprofile=coverage.out && go tool cover -html=coverage.out -o covera
 
 # run specific test
 go test -run <test func>
+
+# run specific test suite
+go test -run <test suite>
+# EX: run alpha test suite in primeappp
+go test -run Test_alpha
 ```
