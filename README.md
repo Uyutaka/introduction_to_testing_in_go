@@ -16,4 +16,7 @@ go test -cover .
 
 # generate html about test coverage
 go test -coverprofile=coverage.out && go tool cover -html=coverage.out -o coverage.html
+
+# run specific test
+go test -run <test func>
 ```
