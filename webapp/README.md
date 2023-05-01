@@ -8,3 +8,9 @@ go get github.com/go-chi/chi/v5
 go get github.com/go-chi/chi/v5/middleware
 ```
 
+
+## Commands
+```
+cd ./webapp/cmd/web
+go run .
+```
