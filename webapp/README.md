@@ -13,5 +13,7 @@ go get github.com/go-chi/chi/v5/middleware
 ```
 cd ./webapp/cmd/web
 go run .
+
+cd ./webapp
 go test ./...
 ```
