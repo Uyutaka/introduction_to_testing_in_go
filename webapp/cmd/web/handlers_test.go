@@ -1,8 +1,11 @@
 package main
 
 import (
+	"context"
+	"io"
 	"net/http"
 	"net/http/httptest"
+	"strings"
 	"testing"
 )
 
@@ -25,7 +28,6 @@ func Test_application_handlers(t *testing.T) {
 	// in lecture
 	// pathToTemplates =  ./../../templates/
 	pathToTemplates = "./templates/"
-	
 
 	// range through test data
 	for _, e := range theTests {
@@ -40,4 +42,40 @@ func Test_application_handlers(t *testing.T) {
 			t.Errorf("for %s: expected status %d, but got %d", e.name, e.expectStatusCode, resp.StatusCode)
 		}
 	}
+}
+
+func TestAppHome(t *testing.T) {
+	// create a request
+	req, _ := http.NewRequest("GET", "/", nil)
+
+	req = addContextAndSessionToRequest(req, app)
+
+	rr := httptest.NewRecorder()
+
+	handler := http.HandlerFunc(app.Home)
+
+	handler.ServeHTTP(rr, req)
+
+	// check status code
+	if rr.Code != http.StatusOK {
+		t.Errorf("TestAppHome returned wrong status code; expected 200 but got %d", rr.Code)
+	}
+
+	body, _ := io.ReadAll(rr.Body)
+	if !strings.Contains(string(body), `<small>From Session:`) {
+		t.Error("did not find correct text in html")
+	}
+}
+
+func getCtx(req *http.Request) context.Context {
+	ctx := context.WithValue(req.Context(), contextUserKey, "unknown")
+	return ctx
+}
+
+func addContextAndSessionToRequest(req *http.Request, app application) *http.Request {
+	req = req.WithContext(getCtx(req))
+
+	ctx, _ := app.Session.Load(req.Context(), req.Header.Get("X-Session"))
+
+	return req.WithContext(ctx)
 }
