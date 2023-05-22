@@ -16,4 +16,14 @@ go run .
 
 cd ./webapp
 go test ./...
+
+# run db
+cd webapp
+docker compose up
+
+# docker
+docker system prune -a                          # remove cache
+docker ps                                       # check container ip
+docker inspect ad2ca99be62d | grep IPAddress    # get container IP
+docker compose run postgres bash                # go inside container
 ```
