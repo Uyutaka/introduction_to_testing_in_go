@@ -3,7 +3,8 @@ package db
 import (
 	"context"
 	"database/sql"
-	"webapp/pkg/data"
+	"github.com/uyutaka/introduction_to_testing_in_go/webapp/pkg/data"
+
 	"golang.org/x/crypto/bcrypt"
 	"log"
 	"time"

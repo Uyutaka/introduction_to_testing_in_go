@@ -21,8 +21,8 @@ func (app *application) addIPToContext(next http.Handler) http.Handler {
 		// get the ip (as accurately as possible)
 		ip, err := getIP(r)
 		if err != nil {
-			ip, _,_ = net.SplitHostPort(r.RemoteAddr)
-			if len(ip) == 0{
+			ip, _, _ = net.SplitHostPort(r.RemoteAddr)
+			if len(ip) == 0 {
 				ip = "unknown"
 			}
 		}
