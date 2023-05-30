@@ -23,6 +23,10 @@ func (app *application) Home(w http.ResponseWriter, r *http.Request) {
 	_ = app.render(w, r, "home.page.gohtml", &TemplateData{Data: td})
 }
 
+func (app *application) Profile(w http.ResponseWriter, r *http.Request) {
+	_ = app.render(w, r, "profile.page.gohtml", &TemplateData{})
+}
+
 type TemplateData struct {
 	IP   string
 	Data map[string]any
@@ -61,6 +65,9 @@ func (app *application) Login(w http.ResponseWriter, r *http.Request) {
 
 	if !form.Valid() {
 		fmt.Fprint(w, "failed validation")
+		// redirect to the login page with error message
+		app.Session.Put(r.Context(), "error", "Invalid login credentials")
+		http.Redirect(w, r, "/", http.StatusSeeOther)
 		return
 	}
 
@@ -70,10 +77,23 @@ func (app *application) Login(w http.ResponseWriter, r *http.Request) {
 	user, err := app.DB.GetUserByEmail(email)
 	if err != nil {
 		log.Println(err)
+		// redirect to the login page with error message
+		app.Session.Put(r.Context(), "error", "Invalid login!")
+		http.Redirect(w, r, "/", http.StatusSeeOther)
+		return
 	}
 
-	log.Println("From database:", user.FirstName)
+	log.Println(password, user.FirstName)
 
-	log.Println(email, password)
-	fmt.Fprint(w, email)
+	// authenticate the user
+	// if not authenticated then redirect with error
+
+	// prevent fixation attck
+	_ = app.Session.RenewToken(r.Context())
+
+	// store success message in session
+
+	// redirect to some other page
+	app.Session.Put(r.Context(), "flash", "Successfully logged in!")
+	http.Redirect(w, r, "/user/profile", http.StatusSeeOther)
 }
