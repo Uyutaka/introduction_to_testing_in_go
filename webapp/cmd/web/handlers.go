@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"html/template"
 	"log"
 	"net/http"
@@ -72,7 +71,6 @@ func (app *application) Login(w http.ResponseWriter, r *http.Request) {
 	form.Required("email", "password")
 
 	if !form.Valid() {
-		fmt.Fprint(w, "failed validation")
 		// redirect to the login page with error message
 		app.Session.Put(r.Context(), "error", "Invalid login credentials")
 		http.Redirect(w, r, "/", http.StatusSeeOther)
@@ -84,10 +82,9 @@ func (app *application) Login(w http.ResponseWriter, r *http.Request) {
 
 	user, err := app.DB.GetUserByEmail(email)
 	if err != nil {
-		log.Println(err)
 		// redirect to the login page with error message
 		app.Session.Put(r.Context(), "error", "Invalid login!")
-		http.Redirect(w, r, "/", http.StatusSeeOther)
+		 http.Redirect(w, r, "/", http.StatusSeeOther)
 		return
 	}
 
@@ -97,7 +94,7 @@ func (app *application) Login(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// prevent fixation attck
+	// prevent fixation attack
 	_ = app.Session.RenewToken(r.Context())
 
 	// redirect to some other page
