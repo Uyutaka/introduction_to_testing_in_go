@@ -6,7 +6,14 @@
     "service": "app",
     "workspaceFolder": "/workspace",
     "customizations": {
-        "customizations": {
+        "vscode": {
+            "settings": {
+                "workbench.colorCustomizations": {
+                    "activityBar.background": "#dc0e1c",
+                    "titleBar.activeBackground": "#2E4442",
+                    "titleBar.activeForeground": "#F9FBFB"
+                }
+            },
             "extensions": [
                 // common
                 "WakaTime.vscode-wakatime",
@@ -19,5 +26,5 @@
                 "premparihar.gotestexplorer"
             ]
         }
-    }
+    },
 }
