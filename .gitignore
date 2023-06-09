@@ -3,5 +3,4 @@
 .DS_Store
 __debug_bin
 webapp/postgres-data
-*.png
-*.jpg
+webapp/cmd/web/static/img
