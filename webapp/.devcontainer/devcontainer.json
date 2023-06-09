@@ -12,7 +12,23 @@
                     "activityBar.background": "#dc0e1c",
                     "titleBar.activeBackground": "#2E4442",
                     "titleBar.activeForeground": "#F9FBFB"
-                }
+                },
+                "cSpell.words": [
+                    "blockman",
+                    "dbname",
+                    "dbrepo",
+                    "dockertest",
+                    "gotestexplorer",
+                    "jackc",
+                    "Jcuy",
+                    "leodevbro",
+                    "pgconn",
+                    "premparihar",
+                    "sslmode",
+                    "stdlib",
+                    "Waka",
+                    "wakatime"
+                ]
             },
             "extensions": [
                 // common
@@ -26,5 +42,5 @@
                 "premparihar.gotestexplorer"
             ]
         }
-    },
+    }
 }
