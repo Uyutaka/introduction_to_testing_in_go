@@ -17,6 +17,8 @@ go run .
 
 cd ./webapp
 go test ./...
+go test -tags=integration ./... # including dbrepo (integration tests)
+
 
 # run db
 cd webapp
